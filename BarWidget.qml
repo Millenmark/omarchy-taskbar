@@ -188,6 +188,10 @@ BarWidget {
       // which is what selects the fallback on older, non-Lua configs.
       + "hyprctl dispatch " + Util.shellQuote(focusLua) + " >/dev/null 2>&1 || "
       + "hyprctl dispatch focuswindow " + Util.shellQuote(target) + " >/dev/null 2>&1; "
+      // Focusing only changes input focus; it doesn't restack a floating
+      // window above the others, so raise it explicitly too, same as
+      // Omarchy's own cycling bind ("Reveal active window on top").
+      + "hyprctl dispatch " + Util.shellQuote("hl.dsp.window.bring_to_top()") + " >/dev/null 2>&1; "
       + 'case "$p" in *,*) hyprctl dispatch '
       + '"hl.dsp.cursor.move({ x = ${p%%,*}, y = ${p#*,} })" >/dev/null 2>&1 ;; esac'
   }
